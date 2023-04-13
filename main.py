@@ -13,6 +13,17 @@ def generate_data() -> List[int]:
 
 def process1(data: List[int]) -> List[int]:
     """TODO: Document this function. What does it do? What are the inputs and outputs?"""
+    """Finds the next largest prime number.
+    
+    Args: 
+        data: takes an input of a list of integers
+        
+
+    Returns: 
+        List[int]: returns a list of integers where each element is the next largest prime number
+        
+    """
+    
     def foo(x):
         """Find the next largest prime number."""
         while True:
@@ -23,6 +34,16 @@ def process1(data: List[int]) -> List[int]:
 
 def process2(data: List[int]) -> List[int]:
     """TODO: Document this function. What does it do? What are the inputs and outputs?"""
+    """Finds the next largest prime number.
+    
+    Args: 
+        data: takes an input of a list of integers
+        
+
+    Returns: 
+        List[int]: returns a list of integers where each element is the next largest prime number
+        
+    """
     def foo(x):
         """Find the next largest prime number."""
         while True:
@@ -33,9 +54,20 @@ def process2(data: List[int]) -> List[int]:
 
 def final_process(data1: List[int], data2: List[int]) -> List[int]:
     """TODO: Document this function. What does it do? What are the inputs and outputs?"""
+    """ Finds the mean between the integers two inputted lists.
+    
+    Args: 
+        data1: the prime number list which is output from function process1 
+        data2: the prime number list which is output from function process2
+        
+
+    Returns: 
+        Float: returns a single floating point number which is the mean of the differences between the two data sets
+        
+    """
     return np.mean([x - y for x, y in zip(data1, data2)])
 
-offload_url = 'http://192.168.4.74:5000' # TODO: Change this to the IP address of your server
+offload_url = 'http://172.20.10.5' # TODO: Change this to the IP address of your server
 
 def run(offload: Optional[str] = None) -> float:
     """Run the program, offloading the specified function(s) to the server.
@@ -55,7 +87,8 @@ def run(offload: Optional[str] = None) -> float:
         def offload_process1(data):
             nonlocal data1
             # TODO: Send a POST request to the server with the input data
-            data1 = response.json()
+            data1 = requests.post(f"http://{offload_url}:5000/delay", data1 = data)
+            data1 = response.json(data1)
         thread = threading.Thread(target=offload_process1, args=(data,))
         thread.start()
         data2 = process2(data)
@@ -66,10 +99,35 @@ def run(offload: Optional[str] = None) -> float:
         #   ChatGPT is also good at explaining the difference between parallel and concurrent execution!
         #   Make sure to cite any sources you use to answer this question.
     elif offload == 'process2':
-        # TODO: Implement this case
+        data2 = None
+        def offload_process2(data):
+            nonlocal data2
+            # TODO: Send a POST request to the server with the input data
+            data2 = requests.post(f"http://{offload_url}:5000/delay", data2 = data)
+            data2 = response.json(data2)
+        thread = threading.Thread(target=offload_process2, args=(data,))
+        thread.start()
+        data1 = process1(data)
+        thread.join()
         pass
     elif offload == 'both':
         # TODO: Implement this case
+        data1 = None
+        data2 = None
+        def offload_process1(data):
+            nonlocal data1
+            # TODO: Send a POST request to the server with the input data
+            data1 = requests.post(f"http://{offload_url}:5000/delay", data1 = data)
+            data1 = response.json(data1)
+        def offload_process2(data):
+            nonlocal data2
+            # TODO: Send a POST request to the server with the input data
+            data2 = requests.post(f"http://{offload_url}:5000/delay", data2 = data)
+            data2 = response.json(data2)
+        thread = threading.Thread(target=offload_process2, args=(data,))
+        thread.start()
+        thread.join()
+        pass
         pass
 
     ans = final_process(data1, data2)
