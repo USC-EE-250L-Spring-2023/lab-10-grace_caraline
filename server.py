@@ -20,12 +20,13 @@ def process1_pass():
     Returns:
         str: list of prime numbers
     """
-    data1 = request.get_json(['data'])
-    data1_return = process1(data1)
+    data1 = request.get_json()
+    res = jsonify(process1(data["data"]))
+    data1_return = process1(res)
     return data1_return
 
     
-    @app.route('/process2', methods=['POST'])
+@app.route('/process2', methods=['POST'])
 def process2_pass():
     """
     Summary: runs process 2 on pc
@@ -33,8 +34,9 @@ def process2_pass():
     Returns:
         str: list of prime numbers
     """
-    data2 = request.get_json(['data'])
-    data2_return = process2(data2)
+    data2 = request.get_json()
+    res = jsonify(process2(data["data"]))
+    data2_return = process2(res)
     return data2_return
 
 if __name__ == "__main__":
