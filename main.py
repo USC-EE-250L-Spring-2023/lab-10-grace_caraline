@@ -88,7 +88,7 @@ def run(offload: Optional[str] = None) -> float:
         def offload_process1(data):
             nonlocal data1
             # TODO: Send a POST request to the server with the input data
-            data1 = requests.post(f"{offload_url}:5000/process1_pass", data = data)
+            data1 = requests.post(f"{offload_url}:5000/process1_pass", json = {'data' :data})
             data1 = response.json(data1)
         thread = threading.Thread(target=offload_process1, args=(data,))
         thread.start()
@@ -104,7 +104,7 @@ def run(offload: Optional[str] = None) -> float:
         def offload_process2(data):
             nonlocal data2
             # TODO: Send a POST request to the server with the input data
-            data2 = requests.post(f"{offload_url}:5000/process2_pass", data = data)
+            data2 = requests.post(f"{offload_url}:5000/process2_pass", json = {'data' : data})
             data2 = response.json(data2)
         thread = threading.Thread(target=offload_process2, args=(data,))
         thread.start()
@@ -118,12 +118,12 @@ def run(offload: Optional[str] = None) -> float:
         def offload_process1(data):
             nonlocal data1
             # TODO: Send a POST request to the server with the input data
-            data1 = requests.post(f"{offload_url}:5000/process1_pass", data1 = data)
+            data1 = requests.post(f"{offload_url}:5000/process1_pass", json = {'data' : data})
             data1 = response.json(data1)
         def offload_process2(data):
             nonlocal data2
             # TODO: Send a POST request to the server with the input data
-            data2 = requests.post(f"//{offload_url}:5000/process2_pass", data2 = data)
+            data2 = requests.post(f"//{offload_url}:5000/process2_pass", json = {'data' : data})
             data2 = response.json(data2)
         thread = threading.Thread(target=offload_both, args=(data,))
         thread.start()
