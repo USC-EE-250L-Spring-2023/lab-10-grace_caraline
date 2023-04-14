@@ -13,7 +13,7 @@ def index():
 # The route should get the data from the request, call the function, and return the result.
 
 @app.route('/process1', methods=['POST'])
-def process1():
+def process1_pass():
     """
     Summary: runs process 1 on pc
     
@@ -26,7 +26,7 @@ def process1():
 
     
     @app.route('/process2', methods=['POST'])
-def process2():
+def process2_pass():
     """
     Summary: runs process 2 on pc
     
