@@ -137,7 +137,20 @@ def main():
     # TODO: Run the program 5 times for each offloading mode, and record the total execution time
     #   Compute the mean and standard deviation of the execution times
     #   Hint: store the results in a pandas DataFrame, use previous labs as a reference
-
+    column_names = ["", "process1", "process2", "both"]
+    time_list = [];
+    for x in range(5):
+        for i in column_names:
+            start_time = time.time()
+            run(i)
+            end_time = time.time()
+            exec_time = time.time()
+            time_list.append(exec_time)
+        
+    data = {
+        "mode" : {column_names, column_names, column_names,column_names}
+        "time" : time_list
+    } 
 
     # TODO: Plot makespans (total execution time) as a bar chart with error bars
     # Make sure to include a title and x and y labels
